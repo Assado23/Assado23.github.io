@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schönes Dreieck</title>
+</head>
+
+<body>
+    <style>
+        .Dreieck {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 150px solid black;
+            position: absolute;
+            top: 300px;
+            left: 500px;
+            cursor: pointer;
+        }
+    </style>
+
+    <a href="Assad.html" target="_blank">
+        <div class="Dreieck"></div>
+    </a>
+
+</body>
+
+</html>
