@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Spiel – Mobile</title>
+    <title>Snake Spiel – Mobile & Tastatur</title>
     <style>
         body {
             text-align: center;
@@ -59,7 +59,6 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-        // Dynamische Größenanpassung des Canvas
         const box = 20;
         canvas.width = Math.floor(window.innerWidth * 0.9 / box) * box;
         canvas.height = Math.floor(window.innerHeight * 0.8 / box) * box;
@@ -68,7 +67,7 @@
         let food = generateFood();
         let dx = box;
         let dy = 0;
-        let speed = 200; // Geschwindigkeit angepasst für mobiles Spielen
+        let speed = 200;
 
         function generateFood() {
             return {
@@ -91,14 +90,12 @@
         function move() {
             let head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-            // Korrigierte Kollisionserkennung für Essen
             if (Math.abs(head.x - food.x) < box && Math.abs(head.y - food.y) < box) {
                 food = generateFood();
             } else {
                 snake.pop();
             }
 
-            // Überprüfung auf Kollisionsbedingungen
             if (
                 head.x < 0 || head.x >= canvas.width ||
                 head.y < 0 || head.y >= canvas.height ||
@@ -139,9 +136,16 @@
             }
         }
 
-        setInterval(updateGame, speed); // Langsamere Geschwindigkeit für Handy
+        // Tastatursteuerung hinzufügen
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp") changeDirection("Up");
+            if (event.key === "ArrowDown") changeDirection("Down");
+            if (event.key === "ArrowLeft") changeDirection("Left");
+            if (event.key === "ArrowRight") changeDirection("Right");
+        });
+
+        setInterval(updateGame, speed);
     </script>
 </body>
 
 </html>
-
