@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Spiel – Mobile & Tastatur</title>
+    <title>Snake Spiel – Tastatursteuerung</title>
     <style>
         body {
             text-align: center;
@@ -20,40 +20,12 @@
             max-width: 90vw;
             max-height: 80vh;
         }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .button {
-            width: 60px;
-            height: 60px;
-            margin: 5px;
-            font-size: 20px;
-            text-align: center;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            touch-action: manipulation;
-        }
     </style>
 </head>
 
 <body>
     <h1>Snake Spiel</h1>
     <canvas id="gameCanvas"></canvas>
-
-    <div class="controls">
-        <button class="button" onclick="changeDirection('Up')">▲</button>
-    </div>
-    <div class="controls">
-        <button class="button" onclick="changeDirection('Left')">◀</button>
-        <button class="button" onclick="changeDirection('Down')">▼</button>
-        <button class="button" onclick="changeDirection('Right')">▶</button>
-    </div>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
@@ -117,32 +89,26 @@
             draw();
         }
 
-        function changeDirection(direction) {
-            if (direction === "Up" && dy === 0) {
+        function changeDirection(event) {
+            if (event.key === "ArrowUp" && dy === 0) {
                 dx = 0;
                 dy = -box;
             }
-            if (direction === "Down" && dy === 0) {
+            if (event.key === "ArrowDown" && dy === 0) {
                 dx = 0;
                 dy = box;
             }
-            if (direction === "Left" && dx === 0) {
+            if (event.key === "ArrowLeft" && dx === 0) {
                 dx = -box;
                 dy = 0;
             }
-            if (direction === "Right" && dx === 0) {
+            if (event.key === "ArrowRight" && dx === 0) {
                 dx = box;
                 dy = 0;
             }
         }
 
-        // Tastatursteuerung mit verbessertem EventListener
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "ArrowUp") changeDirection("Up");
-            if (event.key === "ArrowDown") changeDirection("Down");
-            if (event.key === "ArrowLeft") changeDirection("Left");
-            if (event.key === "ArrowRight") changeDirection("Right");
-        });
+        document.addEventListener("keydown", changeDirection);
 
         setInterval(updateGame, speed);
     </script>
