@@ -18,8 +18,10 @@
             background-color: black;
             display: block;
             margin: auto;
-            width: 400px;
-            height: 400px;
+            width: 90vw;
+            height: 90vw;
+            max-width: 400px;
+            max-height: 400px;
         }
 
         .controls {
@@ -33,9 +35,9 @@
         }
 
         .button {
-            width: 60px;
-            height: 60px;
-            font-size: 20px;
+            width: 70px;
+            height: 70px;
+            font-size: 24px;
             text-align: center;
             background-color: #4CAF50;
             color: white;
@@ -53,7 +55,7 @@
 
 <body>
     <h1>Snake Spiel</h1>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <canvas id="gameCanvas"></canvas>
 
     <div class="controls">
         <button class="button empty"></button>
@@ -69,12 +71,11 @@
         const ctx = canvas.getContext("2d");
 
         const box = 20;
-        const canvasWidth = 400; 
-        const canvasHeight = 400; 
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
+        const canvasSize = Math.min(window.innerWidth * 0.9, 400);
+        canvas.width = canvasSize;
+        canvas.height = canvasSize;
 
-        let snake = [{ x: canvasWidth / 2, y: canvasHeight / 2 }];
+        let snake = [{ x: canvas.width / 2, y: canvas.height / 2 }];
         let food = generateFood();
         let dx = box;
         let dy = 0;
@@ -82,8 +83,8 @@
 
         function generateFood() {
             return {
-                x: Math.floor(Math.random() * (canvasWidth / box)) * box,
-                y: Math.floor(Math.random() * (canvasHeight / box)) * box
+                x: Math.floor(Math.random() * (canvas.width / box)) * box,
+                y: Math.floor(Math.random() * (canvas.height / box)) * box
             };
         }
 
@@ -113,7 +114,7 @@
                 snake.some(segment => segment.x === head.x && segment.y === head.y)
             ) {
                 alert("Game Over! 🐍");
-                snake = [{ x: canvasWidth / 2, y: canvasHeight / 2 }];
+                snake = [{ x: canvas.width / 2, y: canvas.height / 2 }];
                 dx = box;
                 dy = 0;
                 food = generateFood();
