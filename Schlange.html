@@ -4,38 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Spiel – Tastatursteuerung</title>
+    <title>Snake Spiel – Mobile & Tastatur</title>
     <style>
         body {
             text-align: center;
             font-family: Arial, sans-serif;
             background-color: #222;
             color: white;
+            overflow: hidden; /* Verhindert Scrollen */
         }
 
         canvas {
             background-color: black;
             display: block;
             margin: auto;
-            max-width: 90vw;
-            max-height: 80vh;
+            width: 400px; /* Feste Breite */
+            height: 400px; /* Feste Höhe */
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            font-size: 20px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            touch-action: manipulation;
         }
     </style>
 </head>
 
 <body>
     <h1>Snake Spiel</h1>
-    <canvas id="gameCanvas"></canvas>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <div class="controls">
+        <button class="button" onclick="changeDirection('Up')">▲</button>
+    </div>
+    <div class="controls">
+        <button class="button" onclick="changeDirection('Left')">◀</button>
+        <button class="button" onclick="changeDirection('Down')">▼</button>
+        <button class="button" onclick="changeDirection('Right')">▶</button>
+    </div>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
         const box = 20;
-        canvas.width = Math.floor(window.innerWidth * 0.9 / box) * box;
-        canvas.height = Math.floor(window.innerHeight * 0.8 / box) * box;
+        const canvasWidth = 400; 
+        const canvasHeight = 400; 
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
 
-        let snake = [{ x: canvas.width / 2, y: canvas.height / 2 }];
+        let snake = [{ x: canvasWidth / 2, y: canvasHeight / 2 }];
         let food = generateFood();
         let dx = box;
         let dy = 0;
@@ -43,8 +75,8 @@
 
         function generateFood() {
             return {
-                x: Math.floor(Math.random() * (canvas.width / box)) * box,
-                y: Math.floor(Math.random() * (canvas.height / box)) * box
+                x: Math.floor(Math.random() * (canvasWidth / box)) * box,
+                y: Math.floor(Math.random() * (canvasHeight / box)) * box
             };
         }
 
@@ -74,7 +106,7 @@
                 snake.some(segment => segment.x === head.x && segment.y === head.y)
             ) {
                 alert("Game Over! 🐍");
-                snake = [{ x: canvas.width / 2, y: canvas.height / 2 }];
+                snake = [{ x: canvasWidth / 2, y: canvasHeight / 2 }];
                 dx = box;
                 dy = 0;
                 food = generateFood();
@@ -89,26 +121,31 @@
             draw();
         }
 
-        function changeDirection(event) {
-            if (event.key === "ArrowUp" && dy === 0) {
+        function changeDirection(direction) {
+            if (direction === "Up" && dy === 0) {
                 dx = 0;
                 dy = -box;
             }
-            if (event.key === "ArrowDown" && dy === 0) {
+            if (direction === "Down" && dy === 0) {
                 dx = 0;
                 dy = box;
             }
-            if (event.key === "ArrowLeft" && dx === 0) {
+            if (direction === "Left" && dx === 0) {
                 dx = -box;
                 dy = 0;
             }
-            if (event.key === "ArrowRight" && dx === 0) {
+            if (direction === "Right" && dx === 0) {
                 dx = box;
                 dy = 0;
             }
         }
 
-        document.addEventListener("keydown", changeDirection);
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp") changeDirection("Up");
+            if (event.key === "ArrowDown") changeDirection("Down");
+            if (event.key === "ArrowLeft") changeDirection("Left");
+            if (event.key === "ArrowRight") changeDirection("Right");
+        });
 
         setInterval(updateGame, speed);
     </script>
