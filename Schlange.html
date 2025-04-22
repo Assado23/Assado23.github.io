@@ -68,6 +68,7 @@
         let food = generateFood();
         let dx = box;
         let dy = 0;
+        let speed = 200; // Geschwindigkeit angepasst für mobiles Spielen
 
         function generateFood() {
             return {
@@ -90,8 +91,8 @@
         function move() {
             let head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-            // Überprüfung, ob die Schlange das Essen erreicht hat
-            if (head.x === food.x && head.y === food.y) {
+            // Korrigierte Kollisionserkennung für Essen
+            if (Math.abs(head.x - food.x) < box && Math.abs(head.y - food.y) < box) {
                 food = generateFood();
             } else {
                 snake.pop();
@@ -138,8 +139,9 @@
             }
         }
 
-        setInterval(updateGame, 100);
+        setInterval(updateGame, speed); // Langsamere Geschwindigkeit für Handy
     </script>
 </body>
 
 </html>
+
