@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Spiel</title>
+    <title>Snake Spiel – Mobile</title>
     <style>
         body {
             text-align: center;
@@ -16,12 +16,40 @@
             display: block;
             margin: auto;
         }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .button {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            font-size: 20px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
     </style>
 </head>
 
 <body>
     <h1>Snake Spiel</h1>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <div class="controls">
+        <button class="button" onclick="changeDirection('Up')">▲</button>
+    </div>
+    <div class="controls">
+        <button class="button" onclick="changeDirection('Left')">◀</button>
+        <button class="button" onclick="changeDirection('Down')">▼</button>
+        <button class="button" onclick="changeDirection('Right')">▶</button>
+    </div>
+
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -46,7 +74,7 @@
             ctx.fillRect(food.x, food.y, box, box);
 
             ctx.fillStyle = "lime";
-            snake.forEach((segment) => ctx.fillRect(segment.x, segment.y, box, box));
+            snake.forEach(segment => ctx.fillRect(segment.x, segment.y, box, box));
         }
 
         function move() {
@@ -88,26 +116,26 @@
             draw();
         }
 
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "ArrowUp" && dy === 0) {
+        function changeDirection(direction) {
+            if (direction === "Up" && dy === 0) {
                 dx = 0;
                 dy = -box;
             }
-            if (event.key === "ArrowDown" && dy === 0) {
+            if (direction === "Down" && dy === 0) {
                 dx = 0;
                 dy = box;
             }
-            if (event.key === "ArrowLeft" && dx === 0) {
+            if (direction === "Left" && dx === 0) {
                 dx = -box;
                 dy = 0;
             }
-            if (event.key === "ArrowRight" && dx === 0) {
+            if (direction === "Right" && dx === 0) {
                 dx = box;
                 dy = 0;
             }
-        });
+        }
 
-        setInterval(updateGame, 100);
+        setInterval(updateGame, 300);
     </script>
 </body>
 
